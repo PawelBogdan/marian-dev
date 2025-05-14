@@ -32,7 +32,7 @@ option(USE_NCCL "Use NCCL library" ON)
 option(USE_SENTENCEPIECE "Download and compile SentencePiece" ON)
 option(USE_TCMALLOC "Use TCMALLOC if available" ON)
 option(USE_STATIC_LIBS "Link statically against non-system libs" OFF)
-option(GENERATE_MARIAN_INSTALL_TARGETS "Generate Marian install targets (requires CMake 3.12+)" OFF)
+option(GENERATE_MARIAN_INSTALL_TARGETS "Generate Marian install targets (requires CMake 3.12+)" ON)
 option(DETERMINISTIC "Try to make training results as deterministic as possible (e.g. for testing)" OFF)
 option(PYMARIAN "Build Pymarian package which is based on pybind11" OFF)
 
@@ -278,7 +278,7 @@ else(MSVC)
   set(DISABLE_GLOBALLY "-Wno-unused-result ${CLANG_IGNORE_UNKNOWN_CUDA} ${ARM_WARNINGS}")
 
   # These are used in src/CMakeLists.txt on a per-target basis
-  list(APPEND ALL_WARNINGS -Wall; -Werror; -Wextra; -Wno-unused-result; -Wno-deprecated;
+  list(APPEND ALL_WARNINGS -Wall; -Wextra; -Wno-unused-result; -Wno-deprecated;
     -Wno-pragmas; -Wno-unused-parameter; -Wno-unused-function;
     -Wno-unused-value; -Wno-unknown-pragmas; -Wno-sign-compare;
     -Wno-missing-field-initializers;)
@@ -533,7 +533,7 @@ else(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 if(NOT MSVC)
   # @TODO: add warnings here too
-  list(APPEND CUDA_NVCC_FLAGS -ccbin ${CMAKE_C_COMPILER}; -std=c++17; -Xcompiler\ -fPIC; -Xcompiler\ -Wno-unused-result; -Xcompiler\ -Wno-deprecated; -Xcompiler\ -Wno-pragmas; -Xcompiler\ -Wno-unused-value; -Xcompiler\ -Werror;)
+  list(APPEND CUDA_NVCC_FLAGS -ccbin ${CMAKE_C_COMPILER}; -std=c++17; -Xcompiler\ -fPIC; -Xcompiler\ -Wno-unused-result; -Xcompiler\ -Wno-deprecated; -Xcompiler\ -Wno-pragmas; -Xcompiler\ -Wno-unused-value;)
   list(APPEND CUDA_NVCC_FLAGS ${INTRINSICS_NVCC})
 else()
   # c++17 doesn't work with CUDA 10

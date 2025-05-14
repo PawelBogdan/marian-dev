@@ -135,7 +135,7 @@ set(MARIAN_SOURCES
   $<TARGET_OBJECTS:faiss>
 )
 
-add_library(marian STATIC ${MARIAN_SOURCES})
+add_library(marian SHARED ${MARIAN_SOURCES})
 
 target_compile_options(marian PRIVATE ${ALL_WARNINGS})
 
@@ -199,7 +199,7 @@ if(CUDA_FOUND)
     tensors/gpu/cudnn_wrappers.cu
     translator/nth_element.cu
     translator/helpers.cu
-    STATIC)
+    SHARED)
 
   target_compile_options(marian_cuda PRIVATE ${ALL_WARNINGS})
   # make sure all local dependencies are installed first before this is built
